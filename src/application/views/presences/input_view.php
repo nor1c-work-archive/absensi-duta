@@ -119,8 +119,8 @@
               <option disable-realisasi="true" value="Update bank gambar">Update bank gambar</option>
 
             <optgroup label="Desainer">
-              <option disable-realisasi="true" value="Membuat template isi">Membuat template isi</option>
-              <option disable-realisasi="true" value="Membuat template cover">Membuat template cover</option>
+              <option disable-realisasi="false" value="Membuat template isi">Membuat template isi</option>
+              <option disable-realisasi="false" value="Membuat template cover">Membuat template cover</option>
               <option disable-realisasi="true" value="S1">S1</option>
               <option disable-realisasi="true" value="S2">S2</option>
               <option disable-realisasi="true" value="S3">S3</option>
@@ -352,7 +352,7 @@
               <td><?php echo $value->realisasi_target; ?></td>
               <td><?php echo $value->status; ?></td>
               <td>
-                <button type="button" class="update-work-button btn <?=$value->status != '0' ? 'disabled btn-secondary' : 'btn-primary'?>" onclick="updateWork('<?=$value->pekerjaan?>', <?=$value->id_report_pekerjaan?>, <?=$value->id_buku_dikerjakan?>, '<?=$value->kode_buku?>', '<?=$value->no_job?>', '<?=$value->catatan?>', <?=$value->target?>)"><b>Update</b></button>
+                <button type="button" class="update-work-button btn <?=$value->status != '0' || $value->id_karyawan != $this->session->userdata('user_id') ? 'disabled btn-secondary' : 'btn-primary'?>" onclick="updateWork('<?=$value->pekerjaan?>', <?=$value->id_report_pekerjaan?>, <?=$value->id_buku_dikerjakan?>, '<?=$value->kode_buku?>', '<?=$value->no_job?>', '<?=$value->catatan?>', <?=$value->target?>)"><b>Update</b></button>
               </td>
             </tr>
           <?php endif ?>
@@ -449,8 +449,11 @@ $(document).ready(function() {
     $('select[name=status]').attr('disabled', isDisable)
 
     if (!isDisable) {
-      $('input[name=realisasi_target]').attr('required', true)
-      $('select[name=status]').attr('required', true)
+      judulBukuOpt.attr('required', false)
+      catatanInput.attr('required', false)
+      targetInput.attr('required', false)
+      $('input[name=realisasi_target]').attr('required', false)
+      $('select[name=status]').attr('required', false)
     }
   }
   $('#pekerjaan-opt').change(function() {
